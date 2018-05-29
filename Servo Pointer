@@ -1,7 +1,7 @@
 #include <Servo.h>
 #include <math.h>
 
-Servo pointer 
+Servo pointer ;
 
 const float pi = 3.14159265359;
  
