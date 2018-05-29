@@ -1,4 +1,4 @@
-#include <Servo>``
+#include <Servo.h>
 #include <math.h>
 
 Servo servo;
@@ -43,10 +43,10 @@ void setup() {
   delay(1000);
 }
 void loop(){
- MotorX = 13.3605; 
-  MotorY = 74.7864;
+ MotorX = 13.3605; // latitude
+  MotorY = 74.7864; // longitude
   
   // Now give the person a series of positions:
-  motorTurn(12.9716, 77.5946);
+  motorTurn(12.9716, 77.5946); 
   delay(1000);
 }
