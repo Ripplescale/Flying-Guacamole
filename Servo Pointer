@@ -1,8 +1,7 @@
 #include <Servo.h>
 #include <math.h>
 
-Servo servo;
- 
+Servo pointer 
 
 const float pi = 3.14159265359;
  
@@ -13,8 +12,10 @@ float angleRad, angleDeg;
  
 void setup() {
   Serial.begin(9600);
-  servo.attach(13);
-}void motorTurn(float PlaneX,float PlaneY) { 
+  servo.attach(9);
+ }
+
+void motorTurn(float PlaneX,float PlaneY) { 
   deltaX = PlaneX - MotorX;
   deltaY = PlaneY - MotorY;
   
@@ -39,7 +40,7 @@ void setup() {
   Serial.println(angleDeg);
   Serial.println(" degrees");
   
-  servo.write(angleDeg);  // Servo rotate.
+  pointer.write(angleDeg); //Servo rotate
   delay(1000);
 }
 void loop(){
