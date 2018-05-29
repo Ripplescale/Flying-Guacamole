@@ -13,7 +13,7 @@ float angleRad, angleDeg;
  
 void setup() {
   Serial.begin(9600);
-  servo.attach(13);
+  servo.attach(9);
 }
 void motorTurn(float PlaneX,float PlaneY) { 
   deltaX = PlaneX - MotorX;
