@@ -1,0 +1,52 @@
+#include <Servo.h>``
+#include <math.h>
+
+Servo servo;
+ 
+
+const float pi = 3.14159265359;
+ 
+float PlaneX, PlaneY;
+float MotorX, MotorY;
+float deltaX, deltaY;
+float angleRad, angleDeg;
+ 
+void setup() {
+  Serial.begin(9600);
+  servo.attach(13);
+}void motorTurn(float PlaneX,float PlaneY) { 
+  deltaX = PlaneX - MotorX;
+  deltaY = PlaneY - MotorY;
+  
+  if (deltaX > 0 ) {
+    angleRad = atan(deltaY/deltaX);
+  }
+  else {
+    angleRad = pi + atan(deltaY/deltaX);
+  }
+  
+  angleDeg = angleRad * (180/pi); 
+ 
+  if (angleDeg>180) {
+    angleDeg = -(360-angleDeg);
+  }
+  
+  Serial.print("Coordinate: ");
+  Serial.print(PlaneX);
+  Serial.print(",");
+  Serial.println(PlaneY);
+  Serial.print("Angle: ");
+  Serial.println(angleDeg);
+  Serial.println(" degrees");
+  
+  servo.write(angleDeg);  // Servo rotate.
+  delay(1000);
+}
+void loop(){
+ MotorX = 13.3605; 
+  MotorY = 74.7864;
+  
+  // Now give the person a series of positions:
+  motorTurn(12.9716, 77.5946);
+  delay(1000);
+}
