@@ -14,7 +14,8 @@ float angleRad, angleDeg;
 void setup() {
   Serial.begin(9600);
   servo.attach(13);
-}void motorTurn(float PlaneX,float PlaneY) { 
+}
+void motorTurn(float PlaneX,float PlaneY) { 
   deltaX = PlaneX - MotorX;
   deltaY = PlaneY - MotorY;
   
@@ -48,5 +49,7 @@ void loop(){
   
   // Now give the person a series of positions:
   motorTurn(12.9716, 77.5946); 
+  delay(1000);
+  motorTurn(14,75);
   delay(1000);
 }
