@@ -1,0 +1,93 @@
+#include <Servo.h>
+#include <math.h>
+
+Servo pointer ;
+
+const float pi = 3.14159265359;
+ 
+float PlaneX, PlaneY;
+float MotorX, MotorY;
+float deltaX, deltaY;
+float angleRad, angleDeg;
+
+float fLatitude,fLongitude;
+
+String Slatitude, Slongitude;
+
+
+String inputString = "";         // a String to hold incoming data
+boolean stringComplete = false;  // whether the string is complete
+ 
+void setup() {
+  Serial.begin(115200);
+  pointer.attach(9);
+  inputString.reserve(200);
+ }
+
+void loop(){
+  if (stringComplete) {
+    Serial.println(inputString);
+    // clear the string:
+    int indexOfComma=inputString.indexOf(",");
+    int stringLength=inputString.length();
+    Slatitude=inputString.substring(0,indexOfComma);
+    Slongitude=inputString.substring(indexOfComma+1,stringLength-1); 
+    Serial.print(Slatitude);
+    Serial.print("  ");
+    Serial.println(Slongitude);
+    fLatitude=Slatitude.toFloat(); 
+    fLongitude=Slongitude.toFloat();  
+    inputString = "";
+    
+    stringComplete = false;
+  }
+  MotorX = 13.3605; // latitude
+  MotorY = 74.7864; // longitude
+  
+  // Now give the person a series of positions:
+  motorTurn(fLatitude,fLongitude); 
+  delay(1000);
+}
+
+void motorTurn(float PlaneX,float PlaneY) { 
+  deltaX = PlaneX - MotorX;
+  deltaY = PlaneY - MotorY;
+  
+  if (deltaX > 0 ) {
+    angleRad = atan(deltaY/deltaX);
+  }
+  else {
+    angleRad = pi + atan(deltaY/deltaX);
+  }
+  
+  angleDeg = angleRad * (180/pi); 
+ 
+  if (angleDeg>180) {
+    angleDeg = -(360-angleDeg);
+  }
+  
+  Serial.print("Coordinate: ");
+  Serial.print(PlaneX);
+  Serial.print(",");
+  Serial.println(PlaneY);
+  Serial.print("Angle: ");
+  Serial.println(angleDeg);
+  Serial.println(" degrees");
+  
+  pointer.write(angleDeg); //Servo rotate
+  delay(1000);
+}
+
+void serialEvent() {
+  while (Serial.available()) {
+    // get the new byte:
+    char inChar = (char)Serial.read();
+    // add it to the inputString:
+    inputString += inChar;
+    // if the incoming character is a newline, set a flag so the main loop can
+    // do something about it:
+    if (inChar == '@') {
+      stringComplete = true;
+    }
+  }
+}
