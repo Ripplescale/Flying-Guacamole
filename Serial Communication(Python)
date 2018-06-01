@@ -1,9 +1,0 @@
-import serial
-
-ser = serial.Serial('/dev/ttyACM0',9600)
-s = [0]
-while True:
-	write_serial=ser.writeline()
-	s[0] = str(int (ser.writeline(),16))
-	print s[0]
-	print write_serial
