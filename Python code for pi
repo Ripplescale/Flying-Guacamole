@@ -1,0 +1,39 @@
+import requests
+
+import json
+
+import time
+
+import serial
+
+portName='/dev/ttyACM0'
+
+baudRate=115200
+
+serialConn=serial.Serial(portName,baudRate,bytesize=8, parity='N', stopbits=1)
+
+latPlane = 19
+
+lonPlane = 77
+
+while(1):
+
+        url = 'http://localhost:8080/data/aircraft.json'
+
+        response= requests.get(url)
+
+        #print(response.text)
+
+        myJSONObj=json.loads(response.text)
+
+        aircrafts=myJSONObj["aircraft"]
+        for aircraft in aircrafts:
+                #print(aircraft["lat"])
+                #print(aircraft["lon"])
+                print(latPlane)
+                print(lonPlane)
+                serialConn.write(latPlane)
+                serialConn.write(",")
+                serialConn.write(lonPlane)
+                serialConn.write("@")
+        time.sleep(10)
