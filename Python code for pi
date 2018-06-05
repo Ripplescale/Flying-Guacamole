@@ -6,15 +6,15 @@ import time
 
 import serial
 
-portName='/dev/ttyACM0'
+portName='/dev/ttyACM0' #ACM0 or USB0 depending on port
 
 baudRate=115200
 
 serialConn=serial.Serial(portName,baudRate,bytesize=8, parity='N', stopbits=1)
 
-latPlane = 19
+#latPlane = 19
 
-lonPlane = 77
+#lonPlane = 77
 
 while(1):
 
