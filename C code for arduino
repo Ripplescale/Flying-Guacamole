@@ -1,5 +1,5 @@
-#include <Servo.h>
-#include <math.h>
+#include <Servo.h> //library for controlling servo
+#include <math.h> // in-built library for trig functions 
 
 Servo pointer ;
 
@@ -12,7 +12,7 @@ float angleRad, angleDeg;
 
 float fLatitude,fLongitude;
 
-String Slatitude, Slongitude;
+String sLatitude, sLongitude;
 
 
 String inputString = "";         // a String to hold incoming data
@@ -30,19 +30,20 @@ void loop(){
     // clear the string:
     int indexOfComma=inputString.indexOf(",");
     int stringLength=inputString.length();
-    Slatitude=inputString.substring(0,indexOfComma);
-    Slongitude=inputString.substring(indexOfComma+1,stringLength-1); 
-    Serial.print(Slatitude);
+    sLatitude=inputString.substring(0,indexOfComma);
+    sLongitude=inputString.substring(indexOfComma+1,stringLength-1); 
+    Serial.print(sLatitude);
     Serial.print("  ");
-    Serial.println(Slongitude);
-    fLatitude=Slatitude.toFloat(); 
-    fLongitude=Slongitude.toFloat();  
+    Serial.println(sLongitude);
+    fLatitude=sLatitude.toFloat(); 
+    fLongitude=sLongitude.toFloat();  
     inputString = "";
     
     stringComplete = false;
   }
-  MotorX = 13.3605; // latitude
-  MotorY = 74.7864; // longitude
+  //Positioning of Motor
+  MotorX = 13.3605; //lat
+  MotorY = 74.7864; //long
   
   // Now give the person a series of positions:
   motorTurn(fLatitude,fLongitude); 
